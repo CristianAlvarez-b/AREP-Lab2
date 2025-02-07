@@ -1,7 +1,7 @@
 # AREP-Lab2
-# Web Server
+# Web Server & REST Framework
 
-This project implements a simple web server that supports multiple consecutive requests without concurrency. It is designed to read local disk files and return them upon request, including HTML pages, JavaScript files, CSS, and images. Additionally, a web application is created to test the server, which features asynchronous communication with backend REST services.
+This project enhances an existing web server by transforming it into a fully functional web framework that supports backend REST services. The framework provides tools for defining REST services using lambda functions, managing query values within requests, and specifying the location of static files.
 ## Getting Started
 
 These instructions will guide you through obtaining a copy of the project running on your local machine for development and testing purposes
@@ -25,11 +25,11 @@ To run this project, you must have Java installed on your system. Follow the ste
 o set up your development environment:
 1. **Clone the repository:**
 ```bash
-   git clone https://github.com/CristianAlvarez-b/AREP-Lab1
+   git clone https://github.com/CristianAlvarez-b/AREP-Lab2
 ```
 2. **Navigate to the project directory:**
 ```bash
-   cd AREP-Lab1
+   cd AREP-Lab2
 ```
 3. **Build the project with Maven:**
 ```bash
@@ -41,7 +41,21 @@ o set up your development environment:
    java -jar target/HttpServer-1.0-SNAPSHOT.jar
 ```
    The server will start and listen on port 35000 by default. You can now access the web server `http://localhost:35000`.
+### Example Usage
 
+A sample application demonstrating the framework:
+```Java
+     public static void main(String[] args) throws IOException, URISyntaxException {
+        staticfiles("webroot/public");
+        get("/app/hello", (req, res) -> {
+            String name = req.getValues("name");
+            return (name != null) ? "Hello " + name + "!" : "hello world!";
+        });
+        get("/app/pi", (req, res) -> String.valueOf(Math.PI));
+        get("/app/e", (req, res) -> String.valueOf(Math.E));
+        HttpServer.start(args);
+    }
+```
 ### Running the Tests
 Automated tests are included to ensure the server and web application functionality.
 > [!NOTE]
@@ -56,8 +70,10 @@ Automated tests are included to ensure the server and web application functional
 ## Test
 ### Unit Test
 
-![image](https://github.com/user-attachments/assets/12c81bad-e2df-40e6-853a-c9c89d45394f)
+![image](https://github.com/user-attachments/assets/2b5a1f40-5616-4acd-9db9-9fc447e4a2ed)
+
    
+
 
 
 ### Functional Test
@@ -129,18 +145,20 @@ http://localhost:35000/js/app.js
   - PI:
     
      ```Bash
-     http://localhost:35000/app/PI
+     http://localhost:35000/app/pi
      ```
 
-    ![image](https://github.com/user-attachments/assets/0e6ab9e7-1138-4c58-91fd-dc014dd37f0d)
+    ![image](https://github.com/user-attachments/assets/c34d347e-8ff5-4bda-9e21-a8834e885bcf)
+
 
   - Square:
     
      ```Bash
-     http://localhost:35000/app/square?number=4
+     http://localhost:35000/app/e
      ```
 
-    ![image](https://github.com/user-attachments/assets/73828afb-9ab3-4a40-bccb-28ea7049d365)
+    ![image](https://github.com/user-attachments/assets/4440dc81-4cc2-455f-b2d6-55501fb6f71e)
+
 
 
     
